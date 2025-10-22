@@ -6,18 +6,43 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const PortfolioForm = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    expertise: "",
-    description: "",
-    descriptionskills: "",
-    githubLink: "",
-    linkedinLink: "",
-    fbLink: "",
-    InstaLink: "",
+    name: "Hanxla Alvi",
+    expertise: "Full Stack Developer & UI/UX Designer",
+    description: "Passionate MERN stack developer with 3+ years of experience in building scalable web applications. Specialized in React.js, Node.js, and MongoDB. Love creating user-friendly interfaces and solving complex problems.",
+    descriptionskills: "Expertise in modern web technologies with strong focus on frontend development and responsive design. Continuously learning new frameworks and tools.",
+    githubLink: "https://github.com/hanxlaalvi",
+    linkedinLink: "https://linkedin.com/in/hanxlaalvi",
+    fbLink: "https://facebook.com/hanxlaalvi",
+    InstaLink: "https://instagram.com/hanxlaalvi",
   });
 
-  const [skills, setSkills] = useState([{ skill: "", percentage: "" }]);
-  const [projects, setProjects] = useState([{ title: "", description: "", media: "" }]);
+  const [skills, setSkills] = useState([
+    { skill: "JavaScript", percentage: "90" },
+    { skill: "React.js", percentage: "85" },
+    { skill: "Node.js", percentage: "80" },
+    { skill: "MongoDB", percentage: "75" },
+    { skill: "CSS/Tailwind", percentage: "88" },
+    { skill: "Python", percentage: "70" }
+  ]);
+
+  const [projects, setProjects] = useState([
+    { 
+      title: "E-Commerce Platform", 
+      description: "Built a full-stack e-commerce website with React, Node.js, and MongoDB. Features include user authentication, payment gateway, and admin dashboard.", 
+      media: "" 
+    },
+    { 
+      title: "Task Management App", 
+      description: "Developed a collaborative task management application with real-time updates, drag-drop functionality, and team collaboration features.", 
+      media: "" 
+    },
+    { 
+      title: "Portfolio Website", 
+      description: "Created a responsive portfolio website with modern UI/UX design, smooth animations, and contact form integration.", 
+      media: "" 
+    }
+  ]);
+
   const [currentStep, setCurrentStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");

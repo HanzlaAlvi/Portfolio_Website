@@ -5,11 +5,12 @@ import { Skills } from "./Skills";
 import { Projects } from "./Projects";
 import Contact from "./Contact";
 import { Footer } from "./Footer";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode
 
 const fallback = {
-  name: "Ayesha",
+  name: "Hanzla",
   expertise: "UI/UX Designer",
-  description: "Hi! I'm Ayesha, a passionate Web Developer...",
+  description: "Hi! I'm Hanzla, a passionate Web Developer...",
   descriptionskills: "Proficient in HTML, CSS, JS...",
   skills: [
     { skill: "Web Development", percentage: 95 },
@@ -23,11 +24,19 @@ const fallback = {
 
 const UserPortfolio = () => {
   const [portfolio, setPortfolio] = useState(null);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
         const token = localStorage.getItem("token");
+        
+        // Token se userId extract karo
+        if (token) {
+          const decoded = jwtDecode(token);
+          setUserId(decoded.userId); // Ya decoded.userId ya decoded.id check karo
+        }
+
         const res = await axios.get("http://localhost:5000/api/portfolio/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -65,7 +74,8 @@ const UserPortfolio = () => {
             : fallback.projects
         }
       />
-      <Contact />
+      {/* Contact component ko userId pass karo */}
+      <Contact userId={userId} />
       <Footer />
     </>
   );

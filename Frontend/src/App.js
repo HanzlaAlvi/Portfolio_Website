@@ -13,10 +13,10 @@ import PortfolioForm from "./components/PortFolioForm";
 import UserPortfolio from "./components/UserPortfolio";
 
 const demoData = {
-  name: "Ayesha Butt",
+  name: "Hanzla Alvi",
   expertise: "UI/UX Designer & Web Developer",
   description:
-    "Hi! I'm Ayesha, a passionate Web Developer, Web Designer, and UI/UX Designer with a keen eye for creating seamless user experiences. With a strong foundation in front-end and back-end development, I bring creative and functional designs to life. I thrive on solving complex problems and delivering high-quality solutions that make an impact.",
+    "Hi! I'm Hanzla, a passionate Web Developer, Web Designer, and UI/UX Designer with a keen eye for creating seamless user experiences. With a strong foundation in front-end and back-end development, I bring creative and functional designs to life. I thrive on solving complex problems and delivering high-quality solutions that make an impact.",
   descriptionskills:
     "Proficient in HTML, CSS, JavaScript, and React.js for building responsive user interfaces. Skilled in backend development using Python, Django, and Firebase. Experienced in UI/UX design using Figma and Adobe XD. Strong understanding of Git, GitHub, and collaborative workflows.",
   skills: [

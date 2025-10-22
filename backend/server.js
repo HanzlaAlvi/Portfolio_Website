@@ -1,3 +1,4 @@
+// server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -11,7 +12,9 @@ mongoose.connect(
   process.env.MONGO_URI || "mongodb://localhost:27017/portfolioapp"
 );
 
+// Routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/portfolio", require("./routes/portfolio"));
+app.use("/api/contact", require("./routes/contactRoutes")); 
 
 app.listen(5000, () => console.log("Server running on port 5000"));

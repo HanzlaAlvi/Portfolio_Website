@@ -4,11 +4,12 @@ import logo from "../assets/img/logo.jpeg";
 import navIcon1 from "../assets/img/nav-icon1.svg";
 import navIcon2 from "../assets/img/nav-icon2.svg";
 import navIcon3 from "../assets/img/nav-icon3.svg";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +23,10 @@ export const NavBar = () => {
 
     window.addEventListener("scroll", onScroll);
 
+    // Check if user is logged in
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -32,7 +37,8 @@ export const NavBar = () => {
   // Logout handler
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/"); // Redirect to home/demo
+    setIsLoggedIn(false);
+    navigate("/");
   };
 
   return (
@@ -123,26 +129,33 @@ export const NavBar = () => {
                 />
               </a>
             </div>
-            {/* Login Button */}
-            <Link to="/login">
-              <button className="vvd">
-                <span>Login</span>
+            
+            {/* Conditionally render buttons based on login status */}
+            {!isLoggedIn ? (
+              <>
+                {/* Login Button - Show when NOT logged in */}
+                <Link to="/login">
+                  <button className="vvd">
+                    <span>Login</span>
+                  </button>
+                </Link>
+                {/* SignUp Button - Show when NOT logged in */}
+                <Link to="/signup">
+                  <button className="vvd" style={{ marginLeft: "10px" }}>
+                    <span>Sign Up</span>
+                  </button>
+                </Link>
+              </>
+            ) : (
+              /* Logout Button - Show when logged in */
+              <button
+                className="vvd"
+                style={{ marginLeft: "10px" }}
+                onClick={handleLogout}
+              >
+                <span>Logout</span>
               </button>
-            </Link>
-            {/* SignUp Button */}
-            <Link to="/signup">
-              <button className="vvd" style={{ marginLeft: "10px" }}>
-                <span>Sign Up</span>
-              </button>
-            </Link>
-            {/* Logout Button */}
-            <button
-              className="vvd"
-              style={{ marginLeft: "10px" }}
-              onClick={handleLogout}
-            >
-              <span>Logout</span>
-            </button>
+            )}
           </span>
         </Navbar.Collapse>
       </Container>
