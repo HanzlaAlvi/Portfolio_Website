@@ -36,7 +36,7 @@ function App() {
               />
               <Projects projects={demoPortfolio.projects} />
               <Contact />
-              <Footer />
+              <Footer name={demoPortfolio.name} />
             </>
           }
         />

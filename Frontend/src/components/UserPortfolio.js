@@ -51,7 +51,7 @@ const UserPortfolio = () => {
         }
       />
       <Contact userId={userId} />
-      <Footer />
+      <Footer name={portfolio.name || fallback.name} />
     </>
   );
 };

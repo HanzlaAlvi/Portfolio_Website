@@ -5,7 +5,7 @@ import navIcon1 from "../assets/img/nav-icon1.svg";
 import navIcon2 from "../assets/img/nav-icon2.svg";
 import navIcon3 from "../assets/img/nav-icon3.svg";
 
-export const Footer = () => {
+export const Footer = ({ name = "Portify" }) => {
   return (
     <footer
       className="footer"
@@ -61,7 +61,7 @@ export const Footer = () => {
               </a>
             </div>
             <p style={{ fontSize: "14px", margin: 0 }}>
-              © 2025 Ayesha. All Rights Reserved.
+              © {new Date().getFullYear()} {name}. All Rights Reserved.
             </p>
           </Col>
         </Row>
