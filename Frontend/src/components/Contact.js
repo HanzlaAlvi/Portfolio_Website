@@ -1,6 +1,7 @@
 // Contact.js
 import React, { useState } from "react";
 import contact from "../assets/img/contact-img.svg";
+import { sendContactMessage } from "../services/contactService";
 
 const Contact = ({ userId }) => {
   const [formData, setFormData] = useState({
@@ -29,25 +30,11 @@ const Contact = ({ userId }) => {
         return;
       }
 
-      const res = await fetch(`http://localhost:5000/api/contact/${userId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-      
-      if (res.ok) {
-        alert("Message sent successfully!");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        alert(data.message || "Failed to send message");
-      }
+      await sendContactMessage(userId, formData);
+      alert("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" });
     } catch (err) {
-      console.error("Contact form error:", err);
-      alert("Error sending message. Please try again.");
+      alert(err.response?.data?.message || "Error sending message. Please try again.");
     } finally {
       setButtonText("Send");
     }

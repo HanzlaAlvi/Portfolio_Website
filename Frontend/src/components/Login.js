@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "../App.css";
+import { login as loginRequest } from "../services/authService";
+import { getMyPortfolio } from "../services/portfolioService";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
@@ -22,27 +25,12 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      // Backend Login
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        formData
-      );
-      alert(response.data.message);
-      localStorage.setItem("token", response.data.token);
+      const { message, token } = await loginRequest(formData);
+      alert(message);
+      login(token);
 
-      // Portfolio Check
-      const portfolioRes = await axios.get(
-        "http://localhost:5000/api/portfolio/me",
-        {
-          headers: { Authorization: `Bearer ${response.data.token}` },
-        }
-      );
-
-      if (portfolioRes.data && portfolioRes.data.name) {
-        navigate("/portfolio");
-      } else {
-        navigate("/fill-portfolio");
-      }
+      const portfolio = await getMyPortfolio().catch(() => null);
+      navigate(portfolio?.name ? "/portfolio" : "/fill-portfolio");
 
       setFormData({ email: "", password: "" });
     } catch (err) {

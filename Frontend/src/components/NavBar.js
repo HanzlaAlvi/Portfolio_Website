@@ -5,11 +5,12 @@ import navIcon1 from "../assets/img/nav-icon1.svg";
 import navIcon2 from "../assets/img/nav-icon2.svg";
 import navIcon3 from "../assets/img/nav-icon3.svg";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export const NavBar = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [scrolled, setScrolled] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,11 +23,6 @@ export const NavBar = () => {
     };
 
     window.addEventListener("scroll", onScroll);
-
-    // Check if user is logged in
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -34,10 +30,8 @@ export const NavBar = () => {
     setActiveLink(value);
   };
 
-  // Logout handler
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
+    logout();
     navigate("/");
   };
 
@@ -131,7 +125,7 @@ export const NavBar = () => {
             </div>
             
             {/* Conditionally render buttons based on login status */}
-            {!isLoggedIn ? (
+            {!isAuthenticated ? (
               <>
                 {/* Login Button - Show when NOT logged in */}
                 <Link to="/login">

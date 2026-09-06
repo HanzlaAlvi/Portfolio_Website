@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "../App.css";
+import { signup } from "../services/authService";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -23,8 +23,8 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signup", formData);
-      alert(response.data.message);
+      const data = await signup(formData);
+      alert(data.message);
       navigate("/login");
       setFormData({
         username: "",
