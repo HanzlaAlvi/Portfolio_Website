@@ -887,6 +887,13 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   line-height: 1.1em;
 }
 
+.projects-empty {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 18px;
+  text-align: center;
+  padding: 60px 0;
+}
+
 .proj-txtx span {
   font-style: italic;
   font-weight: 400;

@@ -9,6 +9,32 @@ import TrackVisibility from "react-on-screen";
 
 const fallbackImgs = [projImg1, projImg2, projImg3, projImg1, projImg2, projImg3];
 
+const chunkProjects = (projects, parts) => {
+  const chunks = Array.from({ length: parts }, () => []);
+  projects.forEach((project, index) => {
+    chunks[index % parts].push(project);
+  });
+  return chunks;
+};
+
+const ProjectGrid = ({ projects, emptyMessage }) => {
+  if (!projects || projects.length === 0) {
+    return <p className="projects-empty">{emptyMessage}</p>;
+  }
+  return (
+    <Row>
+      {projects.map((project) => (
+        <ProjectCard
+          key={project.originalIndex}
+          title={project.title}
+          description={project.description}
+          imgUrl={fallbackImgs[project.originalIndex % fallbackImgs.length]}
+        />
+      ))}
+    </Row>
+  );
+};
+
 export const Projects = ({
   projects = [
     { title: "Business Startup", description: "Design & Development" },
@@ -17,6 +43,15 @@ export const Projects = ({
     { title: "Business Startup", description: "Design & Development" },
   ],
 }) => {
+  const indexedProjects = projects.map((project, originalIndex) => ({
+    ...project,
+    originalIndex,
+  }));
+  const [tab1Projects, tab2Projects, tab3Projects] = chunkProjects(
+    indexedProjects,
+    3
+  );
+
   return (
     <section className="project" id="projects">
       <Container>
@@ -38,13 +73,13 @@ export const Projects = ({
                       id="pills-tab"
                     >
                       <Nav.Item>
-                        <Nav.Link eventKey="first">Tab 1</Nav.Link>
+                        <Nav.Link eventKey="first">Featured</Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="second">Tab 2</Nav.Link>
+                        <Nav.Link eventKey="second">More Work</Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="third">Tab 3</Nav.Link>
+                        <Nav.Link eventKey="third">Additional Projects</Nav.Link>
                       </Nav.Item>
                     </Nav>
                     <Tab.Content
@@ -52,28 +87,22 @@ export const Projects = ({
                       className={isVisible ? "animate__animated animate__slideInUp" : ""}
                     >
                       <Tab.Pane eventKey="first">
-                        <Row>
-                          {(projects.length > 0 ? projects : [
-                            { title: "Business Startup", description: "Design & Development" },
-                          ]).map((project, index) => (
-                            <ProjectCard
-                              key={index}
-                              title={project.title}
-                              description={project.description}
-                              imgUrl={fallbackImgs[index % fallbackImgs.length]}
-                            />
-                          ))}
-                        </Row>
+                        <ProjectGrid
+                          projects={tab1Projects}
+                          emptyMessage="No featured projects yet. Add your first project to showcase it here."
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="second">
-                        <p>
-                          UI/UX Enthusiast. Love to craft beautiful, functional websites.
-                        </p>
+                        <ProjectGrid
+                          projects={tab2Projects}
+                          emptyMessage="More projects coming soon."
+                        />
                       </Tab.Pane>
                       <Tab.Pane eventKey="third">
-                        <p>
-                          Clean interfaces, responsive layouts, creative designs.
-                        </p>
+                        <ProjectGrid
+                          projects={tab3Projects}
+                          emptyMessage="Additional projects coming soon."
+                        />
                       </Tab.Pane>
                     </Tab.Content>
                   </Tab.Container>

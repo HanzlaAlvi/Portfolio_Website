@@ -13,6 +13,9 @@ const app = express();
 app.use(cors({ origin: corsOrigin }));
 app.use(express.json());
 
+app.get("/", (req, res) =>
+  res.json({ message: "Protify API is running", health: "/api/health" })
+);
 app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 app.use("/api/auth", authRoutes);
